@@ -1,0 +1,14 @@
+find_package(GTest REQUIRED)
+
+add_executable(eds_linked_list_test eds_linked_list_test.cpp)
+
+target_compile_options(eds_linked_list_test PRIVATE -g -O0)
+target_include_directories(eds_linked_list_test PRIVATE ..)
+
+target_link_libraries(eds_linked_list_test PRIVATE
+    GTest::gtest_main
+)
+
+include(GoogleTest)
+
+gtest_discover_tests(eds_linked_list_test)
