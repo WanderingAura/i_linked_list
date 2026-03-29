@@ -1,0 +1,5 @@
+add_executable(eds_linked_list_benchmark eds_linked_list_bench_x86.cpp)
+
+target_compile_options(eds_linked_list_benchmark PRIVATE -g -O2)
+# target_compile_definitions(eds_linked_list_benchmark PRIVATE NDEBUG)
+target_include_directories(eds_linked_list_benchmark PRIVATE ..)

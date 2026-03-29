@@ -1,7 +1,6 @@
 #include "eds_linked_list.hpp"
 #include "gtest/gtest.h"
 #include <csignal>
-#include <iostream>
 #include <gtest/gtest.h>
 
 template<size_t PADDING_SIZE>
@@ -21,28 +20,6 @@ struct ListNode
     int value;
     size_t padding[PADDING_SIZE];
 };
-
-// int main(void)
-// {
-//     constexpr int listSize = 12;
-//     eds::LinkedList<ListNode<0>> list(listSize);
-
-//     for (int i = 0; i < listSize; i++)
-//     {
-//         auto& node = list.node_obtain();
-//         node.value = i;
-//         list.push_back(node);
-//     }
-
-//     auto it = list.begin();
-//     while (it != list.end())
-//     {
-//         std::cout << "value: " << (*it).value << "\n";
-//         ++it;
-//     }
-
-//     return 0;
-// }
 
 TEST(eds_LinkedList, node_obtain)
 {

@@ -1,6 +1,13 @@
 #include <cstddef>
 #include <cassert>
 
+#ifndef NDEBUG
+#include <cstdio>
+#define DBG_PRINT(...) printf(__VA_ARGS__)
+#else
+#define DBG_PRINT(...)
+#endif
+
 namespace eds
 {
 
@@ -66,7 +73,8 @@ class LinkedList
 public:
     LinkedList(size_t capacity) :
         m_data(new T[capacity]),
-        m_free{1}
+        m_free{1},
+        m_capacity(capacity)
     {
         m_data = new T[capacity+1];
 
@@ -129,11 +137,15 @@ public:
 
     T& pop_back()
     {
-        T& back = m_data[m_data->prev];
+        size_t backIdx = m_data->prev;
+        T& back = m_data[backIdx];
 
         m_data->prev = back.prev;
         T& newBack = m_data[back.prev];
         newBack.next = SENTINEL_IDX;
+        back.next = m_free;
+        m_free = backIdx;
+        return back;
     }
 
     T& pop_front()
