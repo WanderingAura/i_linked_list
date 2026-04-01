@@ -20,7 +20,7 @@ struct ListNode
     ListNode& operator=(const ListNode&) = delete;
     size_t next;
     size_t prev;
-    int value;
+    long value;
     size_t padding[PADDING_SIZE];
 };
 
@@ -28,7 +28,9 @@ volatile int sink;
 
 int main(int argc, char** argv)
 {
+    constexpr int padding_size = 4;
     constexpr long num_elements = 1024*1024;
+    static_assert(sizeof(ListNode<padding_size>) * num_elements < 3*1024*1024*1024U);
     std::vector<int> values(num_elements);
 
     for (int i = 0; i < num_elements; i++)
@@ -36,7 +38,7 @@ int main(int argc, char** argv)
         values[i] = rand();
     }
 
-    eds::LinkedList<ListNode<0>> list(num_elements);
+    eds::LinkedList<ListNode<padding_size>> list(num_elements);
     for (u32 i = 0; i < 20; i++)
     {
 
