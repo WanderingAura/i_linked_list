@@ -11,11 +11,11 @@
 namespace eds
 {
 
-template <typename T>
+template <typename T, typename index_t>
 class LinkedListIterator
 {
 public:
-    LinkedListIterator(T* data, size_t index) :
+    LinkedListIterator(T* data, index_t index) :
         m_data(data),
         m_index(index)
     {
@@ -43,20 +43,20 @@ public:
         return m_data[m_index];
     }
 
-    bool operator==(const LinkedListIterator<T>& rhs)
+    bool operator==(const LinkedListIterator<T, index_t>& rhs)
     {
         return rhs.m_data == m_data &&
             rhs.m_index == m_index;
     }
 
-    bool operator!=(const LinkedListIterator<T>& rhs)
+    bool operator!=(const LinkedListIterator<T, index_t>& rhs)
     {
         return !operator==(rhs);
     }
 
-    LinkedListIterator<T> operator++(int) // postfix
+    LinkedListIterator<T, index_t> operator++(int) // postfix
     {
-        LinkedListIterator<T> temp = *this;
+        LinkedListIterator<T, index_t> temp = *this;
         ++(*this);
         return temp;
     }
@@ -64,14 +64,14 @@ public:
 
 private:
     T* m_data;
-    size_t m_index;
+    index_t m_index;
 };
 
-template <typename T>
+template <typename T, typename index_t>
 class LinkedList
 {
 public:
-    LinkedList(size_t capacity) :
+    LinkedList(index_t capacity) :
         m_data(new T[capacity]),
         m_free{1},
         m_capacity(capacity)
@@ -79,7 +79,7 @@ public:
         m_data = new T[capacity+1];
 
         // set up the free list
-        for (size_t i = 1; i < capacity+1; i++)
+        for (index_t i = 1; i < capacity+1; i++)
         {
             m_data[i].next = (i+1) % (capacity+1);
         }
@@ -102,24 +102,24 @@ public:
 
     T& front()
     {
-        size_t head = m_data->next;
+        index_t head = m_data->next;
         return m_data[head];
     }
 
     T& back()
     {
-        size_t tail = m_data->prev;
+        index_t tail = m_data->prev;
         return m_data[tail];
     }
 
-    LinkedListIterator<T> begin()
+    LinkedListIterator<T, index_t> begin()
     {
-        return LinkedListIterator<T>(m_data, m_data->next);
+        return LinkedListIterator<T, index_t>(m_data, m_data->next);
     }
 
-    LinkedListIterator<T> end()
+    LinkedListIterator<T,index_t> end()
     {
-        return LinkedListIterator<T>(m_data, SENTINEL_IDX);
+        return LinkedListIterator<T, index_t>(m_data, SENTINEL_IDX);
     }
 
     void remove(T& toRemove)
@@ -137,7 +137,7 @@ public:
 
     T& pop_back()
     {
-        size_t backIdx = m_data->prev;
+        index_t backIdx = m_data->prev;
         T& back = m_data[backIdx];
 
         m_data->prev = back.prev;
@@ -152,7 +152,7 @@ public:
     {
         // TODO: consider using remove() instead of code duplication here?
         // Will this improve the i-cache performance?
-        size_t frontIdx = m_data->next;
+        index_t frontIdx = m_data->next;
         T& front = m_data[frontIdx];
         m_data->next = front.next;
         T& newFront = m_data[front.next];
@@ -184,8 +184,8 @@ public:
         // casted something in the middle of T into T&
         assert(&item > m_data && &item <= m_data + m_capacity);
         // is there a better way of getting this index?
-        size_t newFrontIdx = (&item - m_data);
-        size_t oldFrontIdx = m_data->next;
+        index_t newFrontIdx = (&item - m_data);
+        index_t oldFrontIdx = m_data->next;
 
         T& oldFront = m_data[oldFrontIdx];
 
@@ -211,9 +211,9 @@ public:
 
 private:
     T* m_data;
-    size_t m_free;
-    size_t m_capacity;
-    static constexpr size_t SENTINEL_IDX = 0;
+    index_t m_free;
+    index_t m_capacity;
+    static constexpr index_t SENTINEL_IDX = 0;
 };
 
 }

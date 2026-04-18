@@ -4,7 +4,6 @@ add_executable(eds_linked_list_test eds_linked_list_test.cpp)
 target_compile_options(eds_linked_list_test PRIVATE -g)
 target_include_directories(eds_linked_list_test PRIVATE ..)
 
-# NOTE: we need this to catch release build bugs
 add_executable(eds_linked_list_test_fast eds_linked_list_test.cpp)
 target_compile_options(eds_linked_list_test_fast PRIVATE -g -O2)
 target_include_directories(eds_linked_list_test_fast PRIVATE ..)

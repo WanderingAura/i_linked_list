@@ -24,7 +24,7 @@ struct ListNode
 TEST(eds_LinkedList, node_obtain)
 {
     constexpr int listSize = 1;
-    eds::LinkedList<ListNode<0>> list(listSize);
+    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
 
     auto& front = list.front();
     EXPECT_EQ(front.prev, 0);
@@ -50,7 +50,7 @@ TEST(eds_LinkedList, node_obtain)
 TEST(eds_LinkedList, push_back)
 {
     constexpr int listSize = 1;
-    eds::LinkedList<ListNode<0>> list(listSize);
+    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
 
     auto& front = list.front();
     ASSERT_NE(front.value, 1);
@@ -68,7 +68,7 @@ TEST(eds_LinkedList, push_back)
 TEST(eds_linked_list, push_back_lots)
 {
     constexpr int listSize = 10;
-    eds::LinkedList<ListNode<0>> list(listSize);
+    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
 
     for (size_t i = 0; i < listSize; i++)
     {
@@ -94,7 +94,7 @@ TEST(eds_linked_list, push_back_lots)
 TEST(eds_linked_list, push_front)
 {
     constexpr int listSize = 2;
-    eds::LinkedList<ListNode<0>> list(listSize);
+    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
 
     auto& node1 = list.node_obtain();
 
