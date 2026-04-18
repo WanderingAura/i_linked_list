@@ -83,6 +83,8 @@ public:
         {
             m_data[i].next = (i+1) % (capacity+1);
         }
+        m_data[0].next = 0;
+        m_data[0].prev = 0;
     }
 
     // NOTE: is this linked list even a good idea?

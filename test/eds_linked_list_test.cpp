@@ -2,29 +2,43 @@
 #include "gtest/gtest.h"
 #include <csignal>
 #include <gtest/gtest.h>
+#include "integer_types.h"
 
-template<size_t PADDING_SIZE>
+template<typename index_t, size_t PADDING_SIZE>
+struct ListNodeIList
+{
+    ListNodeIList()
+    {
+
+    }
+    ListNodeIList(const ListNodeIList&) = delete;
+
+    ListNodeIList& operator=(const ListNodeIList&) = delete;
+    index_t next;
+    index_t prev;
+    u8 padding[PADDING_SIZE];
+};
+
+template<typename index_t, size_t PADDING_SIZE>
 struct ListNode
 {
-    ListNode() :
-        next{0},
-        prev{0}
+    ListNode()
     {
 
     }
     ListNode(const ListNode&) = delete;
 
     ListNode& operator=(const ListNode&) = delete;
-    size_t next;
-    size_t prev;
+    index_t next;
+    index_t prev;
     int value;
-    size_t padding[PADDING_SIZE];
+    u8 padding[PADDING_SIZE];
 };
 
 TEST(eds_LinkedList, node_obtain)
 {
     constexpr int listSize = 1;
-    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
+    eds::LinkedList<ListNode<u32, 1>, u32> list(listSize);
 
     auto& front = list.front();
     EXPECT_EQ(front.prev, 0);
@@ -50,7 +64,7 @@ TEST(eds_LinkedList, node_obtain)
 TEST(eds_LinkedList, push_back)
 {
     constexpr int listSize = 1;
-    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
+    eds::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
 
     auto& front = list.front();
     ASSERT_NE(front.value, 1);
@@ -68,7 +82,33 @@ TEST(eds_LinkedList, push_back)
 TEST(eds_linked_list, push_back_lots)
 {
     constexpr int listSize = 10;
-    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
+    eds::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
+
+    for (size_t i = 0; i < listSize; i++)
+    {
+
+        auto& node = list.node_obtain();
+        node.value = i+1;
+        list.push_back(node);
+
+        ASSERT_EQ(list.back().value, i+1);
+    }
+    EXPECT_EQ(list.front().value, 1);
+
+    auto it = list.begin();
+    size_t count = 1;
+    while (it != list.end())
+    {
+        ASSERT_EQ((*it).value, count);
+        ++count;
+        ++it;
+    }
+}
+
+TEST(eds_linked_list, push_back_u16)
+{
+    constexpr int listSize = 10;
+    eds::LinkedList<ListNode<u16, 1>, u16> list(listSize);
 
     for (size_t i = 0; i < listSize; i++)
     {
@@ -94,7 +134,7 @@ TEST(eds_linked_list, push_back_lots)
 TEST(eds_linked_list, push_front)
 {
     constexpr int listSize = 2;
-    eds::LinkedList<ListNode<0>, uint32_t> list(listSize);
+    eds::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
 
     auto& node1 = list.node_obtain();
 
