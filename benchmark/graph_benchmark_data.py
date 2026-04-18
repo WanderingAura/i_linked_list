@@ -29,7 +29,7 @@ def main():
             if ("random_access" in func):
                 if ("ilist" in func):
                     ilist_random_access.append(cycles)
-                    element_size.append(row["total_size_bytes"])
+                    element_size.append(row["element_size"])
                 else:
                     eastl_random_access.append(cycles)
             else:
