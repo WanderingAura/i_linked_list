@@ -24,7 +24,6 @@ struct ListNode
 {
     ListNode()
     {
-
     }
     ListNode(const ListNode&) = delete;
 

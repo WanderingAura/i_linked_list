@@ -71,6 +71,7 @@ template <typename T, typename index_t>
 class LinkedList
 {
 public:
+    LinkedList() = default;
     LinkedList(index_t capacity) :
         m_data(new T[capacity]),
         m_free{1},
@@ -211,7 +212,7 @@ public:
         return m_data->prev == 0;
     }
 
-private:
+protected:
     T* m_data;
     index_t m_free;
     index_t m_capacity;
