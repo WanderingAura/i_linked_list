@@ -1,4 +1,3 @@
-#include <cstddef>
 #include <cassert>
 
 #ifndef NDEBUG
@@ -8,7 +7,7 @@
 #define DBG_PRINT(...)
 #endif
 
-namespace eds
+namespace ill
 {
 
 template <typename T, typename index_t>
@@ -87,16 +86,6 @@ public:
         m_data[0].next = 0;
         m_data[0].prev = 0;
     }
-
-    // NOTE: is this linked list even a good idea?
-    // We really want to be able to support types T that aren't default constructible...
-    // This isn't possible really if we allocate inside the structure.
-    // What if we just let the user decide on how to arrange the data, like a normal
-    // library? The user allocates and then the library handles the data structure.
-    // Will this even be harder on performance? I don't think so
-    // Well if the user decides to not use an array, then we can't use indexes.
-    // I think I will make this a niche class that allocates the data and requires
-    // the type to be default constructible.
 
     ~LinkedList()
     {

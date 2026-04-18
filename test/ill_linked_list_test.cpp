@@ -1,4 +1,4 @@
-#include "eds_linked_list.hpp"
+#include "ill_linked_list.hpp"
 #include "gtest/gtest.h"
 #include <csignal>
 #include <gtest/gtest.h>
@@ -34,10 +34,10 @@ struct ListNode
     u8 padding[PADDING_SIZE];
 };
 
-TEST(eds_LinkedList, node_obtain)
+TEST(ill, node_obtain)
 {
     constexpr int listSize = 1;
-    eds::LinkedList<ListNode<u32, 1>, u32> list(listSize);
+    ill::LinkedList<ListNode<u32, 1>, u32> list(listSize);
 
     auto& front = list.front();
     EXPECT_EQ(front.prev, 0);
@@ -60,10 +60,10 @@ TEST(eds_LinkedList, node_obtain)
 }
 
 
-TEST(eds_LinkedList, push_back)
+TEST(ill_LinkedList, push_back)
 {
     constexpr int listSize = 1;
-    eds::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
+    ill::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
 
     auto& front = list.front();
     ASSERT_NE(front.value, 1);
@@ -78,10 +78,10 @@ TEST(eds_LinkedList, push_back)
     EXPECT_EQ(list.back().value, 1);
 }
 
-TEST(eds_linked_list, push_back_lots)
+TEST(ill_linked_list, push_back_lots)
 {
     constexpr int listSize = 10;
-    eds::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
+    ill::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
 
     for (size_t i = 0; i < listSize; i++)
     {
@@ -104,10 +104,10 @@ TEST(eds_linked_list, push_back_lots)
     }
 }
 
-TEST(eds_linked_list, push_back_u16)
+TEST(ill_linked_list, push_back_u16)
 {
     constexpr int listSize = 10;
-    eds::LinkedList<ListNode<u16, 1>, u16> list(listSize);
+    ill::LinkedList<ListNode<u16, 1>, u16> list(listSize);
 
     for (size_t i = 0; i < listSize; i++)
     {
@@ -130,10 +130,10 @@ TEST(eds_linked_list, push_back_u16)
     }
 }
 
-TEST(eds_linked_list, push_front)
+TEST(ill_linked_list, push_front)
 {
     constexpr int listSize = 2;
-    eds::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
+    ill::LinkedList<ListNode<u32, 1>, uint32_t> list(listSize);
 
     auto& node1 = list.node_obtain();
 

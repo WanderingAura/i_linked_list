@@ -8,7 +8,7 @@
 
 #include "EASTL/intrusive_list.h"
 #include "integer_types.h"
-#include "eds_linked_list.hpp"
+#include "ill_linked_list.hpp"
 
 namespace
 {
@@ -248,7 +248,7 @@ void ilist_benchmark_linear_access(long num_elements, int num_loops)
             values[i] = rand();
         }
 
-        eds::LinkedList<ListNodeIList<u16, PADDING_BYTES>, u32> list(num_elements);
+        ill::LinkedList<ListNodeIList<u16, PADDING_BYTES>, u32> list(num_elements);
         for (int i = 0; i < num_elements; i++)
         {
             auto& node = list.node_obtain();
@@ -272,14 +272,14 @@ void ilist_benchmark_linear_access(long num_elements, int num_loops)
 }
 
 template<typename T, typename index_t>
-class IncoherentList : public eds::LinkedList<T, index_t>
+class IncoherentList : public ill::LinkedList<T, index_t>
 {
-    using eds::LinkedList<T, index_t>::m_data;
-    using eds::LinkedList<T, index_t>::m_capacity;
-    using eds::LinkedList<T, index_t>::m_free;
+    using ill::LinkedList<T, index_t>::m_data;
+    using ill::LinkedList<T, index_t>::m_capacity;
+    using ill::LinkedList<T, index_t>::m_free;
 public:
     IncoherentList(index_t capacity) :
-        eds::LinkedList<T, index_t>()
+        ill::LinkedList<T, index_t>()
     {
         m_free = 1;
         m_capacity = capacity;
